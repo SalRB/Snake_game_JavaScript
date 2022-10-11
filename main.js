@@ -21,11 +21,14 @@ window.onload = load => {
     let alive;
     let foodEaten = false;
     let grow;
-    let foodPosition = [Math.floor(Math.random() * x), Math.floor(Math.random() * y)];;
-    let p = 10;
+    let foodPosition = [numberProcessor(Math.floor(Math.random() * x - 15)) + 15, numberProcessor(Math.floor(Math.random() * y + 15)) - 15];
+    console.log(foodPosition);
+    let p = 0;
 
     pHighScore.textContent = "High score: " + highScore;
+
     changeDifficulty();
+
     function changeDifficulty() {
         console.log(difficulty.value);
 
@@ -47,23 +50,27 @@ window.onload = load => {
         }
     }
 
+    function numberProcessor(num) {
+        return Math.round(num / 30) * 30;
+    }
+
     // Depending on the direction variable, moves the snake accordingly
     function move() {
         switch (direction) {
             case "right":
-                snakeBody.unshift([snakeBody[0][0] + 10 + 21, snakeBody[0][1]]);
+                snakeBody.unshift([snakeBody[0][0] + 10 + 20, snakeBody[0][1]]);
                 if (grow !== true) snakeBody.pop(); grow = false;
                 break;
             case "left":
-                snakeBody.unshift([snakeBody[0][0] - 10 - 21, snakeBody[0][1]]);
+                snakeBody.unshift([snakeBody[0][0] - 10 - 20, snakeBody[0][1]]);
                 if (grow !== true) snakeBody.pop(); grow = false;
                 break;
             case "up":
-                snakeBody.unshift([snakeBody[0][0], snakeBody[0][1] - 10 - 21]);
+                snakeBody.unshift([snakeBody[0][0], snakeBody[0][1] - 10 - 20]);
                 if (grow !== true) snakeBody.pop(); grow = false;
                 break;
             case "down":
-                snakeBody.unshift([snakeBody[0][0], snakeBody[0][1] + 10 + 21]);
+                snakeBody.unshift([snakeBody[0][0], snakeBody[0][1] + 10 + 20]);
                 if (grow !== true) snakeBody.pop(); grow = false;
                 break;
             default:
@@ -97,30 +104,30 @@ window.onload = load => {
     // Generetes the food at a random spot
     function drawFood() {
         if (foodEaten !== false) {
-            foodPosition = [Math.floor(Math.random() * x), Math.floor(Math.random() * y)];
+            foodPosition = [numberProcessor(Math.floor(Math.random() * x - 15)) + 15, numberProcessor(Math.floor(Math.random() * y + 15)) - 15];
             foodEaten = false;
             grow = true;
         }
 
         ctx.beginPath();
-        ctx.arc(foodPosition[0], foodPosition[1], 20, 0, Math.PI * 2, false);
+        ctx.arc(foodPosition[0], foodPosition[1], 15, 0, Math.PI * 2, false);
         ctx.fillStyle = "#B91D1D";
         ctx.fill();
         ctx.closePath();
     }
 
     function drawGrid() {
-        // for (var i = 0; i <= x; i += 40) {
-        //     ctx.moveTo(0.5 + i + p, p);
-        //     ctx.lineTo(0.5 + i + p, y + p);
-        // }
+        for (var i = 0; i <= x; i += 30) {
+            ctx.moveTo(0.5 + i + p, p);
+            ctx.lineTo(0.5 + i + p, y + p);
+        }
 
-        // for (var i = 0; i <= y; i += 40) {
-        //     ctx.moveTo(p, 0.5 + i + p);
-        //     ctx.lineTo(x + p, 0.5 + i + p);
-        // }
-        // ctx.strokeStyle = "black";
-        // ctx.stroke();
+        for (var i = 0; i <= y; i += 30) {
+            ctx.moveTo(p, 0.5 + i + p);
+            ctx.lineTo(x + p, 0.5 + i + p);
+        }
+        ctx.strokeStyle = "black";
+        ctx.stroke();
     }
 
     // Add event listener on keydown
@@ -143,7 +150,7 @@ window.onload = load => {
 
     // Detects if the snake eats the food and increases the score
     function foodCollision() {
-        if ((snakeBody[0][0] + 40 > foodPosition[0] && snakeBody[0][0] - 10 < foodPosition[0]) && (snakeBody[0][1] - 0 < foodPosition[1] && snakeBody[0][1] + 50 > foodPosition[1])) {
+        if ((snakeBody[0][0] + 40 > foodPosition[0] && snakeBody[0][0] - 10 < foodPosition[0]) && (snakeBody[0][1] - 0 < foodPosition[1] && snakeBody[0][1] + 30 > foodPosition[1])) {
             foodEaten = true;
             score++;
 
@@ -164,7 +171,7 @@ window.onload = load => {
 
     // If the head collides with a wall, the game ends and an alerts pops up
     function borderCollision() {
-        if (snakeBody[0][0] < -10 || snakeBody[0][0] > 1910 || snakeBody[0][1] < -10 || snakeBody[0][1] > 1050) {
+        if (snakeBody[0][0] < -10 || snakeBody[0][0] > (x - 10) || snakeBody[0][1] < -10 || snakeBody[0][1] > (y - 10)) {
             alive = false;
             alert("You died\nTry not to hug the walls");
         }
