@@ -1,6 +1,9 @@
 "use strict";
 
-window.onload = load => {
+function startGame() {
+
+    let element = document.getElementById("startButton"); 
+    element.remove();
 
     // Saves the canvas into a const variable
     const canvas = document.getElementById("leCanvas");
@@ -20,16 +23,16 @@ window.onload = load => {
     let speed = 1;
     let alive;
     let foodEaten = false;
-    let grow;
+    let grow = 0;
     let foodPosition = [numberProcessor(Math.floor(Math.random() * x - 15)) + 15, numberProcessor(Math.floor(Math.random() * y + 15)) - 15];
     console.log(foodPosition);
     let p = 0;
 
     pHighScore.textContent = "High score: " + highScore;
 
-    changeDifficulty();
+    setDifficulty();
 
-    function changeDifficulty() {
+    function setDifficulty() {
         console.log(difficulty.value);
 
         switch (difficulty.value) {
@@ -59,19 +62,23 @@ window.onload = load => {
         switch (direction) {
             case "right":
                 snakeBody.unshift([snakeBody[0][0] + 10 + 20, snakeBody[0][1]]);
-                if (grow !== true) snakeBody.pop(); grow = false;
+                if (grow == 0) snakeBody.pop();
+                if (grow >= 1) grow--;
                 break;
             case "left":
                 snakeBody.unshift([snakeBody[0][0] - 10 - 20, snakeBody[0][1]]);
-                if (grow !== true) snakeBody.pop(); grow = false;
+                if (grow == 0) snakeBody.pop();
+                if (grow >= 1) grow--;
                 break;
             case "up":
                 snakeBody.unshift([snakeBody[0][0], snakeBody[0][1] - 10 - 20]);
-                if (grow !== true) snakeBody.pop(); grow = false;
+                if (grow == 0) snakeBody.pop();
+                if (grow >= 1) grow--;
                 break;
             case "down":
                 snakeBody.unshift([snakeBody[0][0], snakeBody[0][1] + 10 + 20]);
-                if (grow !== true) snakeBody.pop(); grow = false;
+                if (grow == 0) snakeBody.pop();
+                if (grow >= 1) grow--;
                 break;
             default:
                 break;
@@ -106,7 +113,7 @@ window.onload = load => {
         if (foodEaten !== false) {
             foodPosition = [numberProcessor(Math.floor(Math.random() * x - 15)) + 15, numberProcessor(Math.floor(Math.random() * y + 15)) - 15];
             foodEaten = false;
-            grow = true;
+            grow = growthRate + grow;
         }
 
         ctx.beginPath();

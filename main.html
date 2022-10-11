@@ -2,12 +2,18 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="main.js"></script>
 </head>
-<select name="difficulty" id="difficulty">
-    <option value="easy">Easy</option>
-    <option value="medium">Medium</option>
-    <option value="hard">Hard</option>
-</select>
-<p id="score">Score: 0</p>
-<p id="highScore">High score: 0</p>
-<canvas id="leCanvas" width="1920" height="1080"></canvas>
+<div class="container">
+    <div class="menu">
+        <select name="difficulty" id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+        <p id="score">Score: 0</p>
+        <p id="highScore">High score: 0</p>
+        <button onclick="startGame()" id="startButton">Load</button>
+    </div>
+    <canvas id="leCanvas" width="1920" height="1080"></canvas>
+
+</div>
 <button id="reset">Reset</button>

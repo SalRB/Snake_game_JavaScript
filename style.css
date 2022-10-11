@@ -2,7 +2,10 @@ body {
     background-color: rgb(0, 0, 0);
     font-family: monospace;
     color: white;
+}
 
+.container {
+    display: flex;
 }
 
 canvas {
@@ -13,7 +16,7 @@ canvas {
     margin-right: auto;
     display: block;
     max-width: 800px;
-
+    zoom: 150%;
 }
 
 #reset {
@@ -23,7 +26,8 @@ canvas {
     margin-top: 20px;
 }
 
-#difficulty {
+#difficulty,
+button {
     background-color: black;
     color: white;
     margin-top: 20px;
