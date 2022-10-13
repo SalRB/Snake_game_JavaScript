@@ -2,51 +2,59 @@
 
 function startGame() {
 
-    let element = document.getElementById("startButton"); 
-    element.remove();
+    let startButton = document.getElementById("startButton");
+    startButton.remove();
 
     // Saves the canvas into a const variable
     const canvas = document.getElementById("leCanvas");
+
+    let x;
+    let y;
+    let growthRate;
+    let speed = 1;
+    const difficulty = document.getElementById("difficulty");
+    setDifficulty();
+
+    canvas.setAttribute("width", x);
+    canvas.setAttribute("height", y);
     const ctx = canvas.getContext("2d");
     const pScore = document.getElementById("score");
     const pHighScore = document.getElementById("highScore");
-    const difficulty = document.getElementById("difficulty");
 
-    let x = canvas.width;
-    let y = canvas.height;
     let direction;
     let snakeBody = [[150, 150]]
 
-    let growthRate;
     let score = 0;
     let highScore = localStorage.getItem("hScore");
-    let speed = 1;
     let alive;
     let foodEaten = false;
     let grow = 0;
     let foodPosition = [numberProcessor(Math.floor(Math.random() * x - 15)) + 15, numberProcessor(Math.floor(Math.random() * y + 15)) - 15];
-    console.log(foodPosition);
+    let valid_position = [];
     let p = 0;
 
     pHighScore.textContent = "High score: " + highScore;
 
-    setDifficulty();
-
     function setDifficulty() {
-        console.log(difficulty.value);
 
         switch (difficulty.value) {
             case "easy":
-                speed = 1.5;
-                growthRate = 1;
+                speed = 1.6;
+                growthRate = 20;
+                x = 960;
+                y = 540;
                 break;
             case "medium":
                 speed = 1;
                 growthRate = 3;
+                x = 1440;
+                y = 810;
                 break;
             case "hard":
                 speed = 0.9;
                 growthRate = 5;
+                x = 1920;
+                y = 1080;
                 break;
             default:
                 break;
@@ -93,7 +101,7 @@ function startGame() {
         bodyCollision();
         borderCollision();
         drawBody();
-        drawFood();
+        generateFood();
         drawGrid();
     }
 
@@ -108,13 +116,30 @@ function startGame() {
         });
     }
 
-    // Generetes the food at a random spot
-    function drawFood() {
+    // Generetes the food coords at an empty spot
+    function generateFood() {
         if (foodEaten !== false) {
-            foodPosition = [numberProcessor(Math.floor(Math.random() * x - 15)) + 15, numberProcessor(Math.floor(Math.random() * y + 15)) - 15];
+            valid_position[0] = false;
+            while (valid_position[0] == false) {
+                foodPosition = [numberProcessor(Math.floor(Math.random() * x - 15)) + 15, numberProcessor(Math.floor(Math.random() * y + 15)) - 15];
+                valid_position[1] = snakeBody.length;
+                for (let i = 0; i < snakeBody.length; i++) {
+                    if (foodPosition[0] - 15 == snakeBody[i][0] && foodPosition[1] - 15 == snakeBody[i][1]) {
+                        valid_position[1]--;
+                    }
+                }
+                if (valid_position[1] == snakeBody.length) {
+                    valid_position[0] = true;
+                }
+            }
             foodEaten = false;
             grow = growthRate + grow;
         }
+        drawFood()
+    }
+
+    // Generetes the food
+    function drawFood() {
 
         ctx.beginPath();
         ctx.arc(foodPosition[0], foodPosition[1], 15, 0, Math.PI * 2, false);
@@ -122,6 +147,7 @@ function startGame() {
         ctx.fill();
         ctx.closePath();
     }
+
 
     function drawGrid() {
         for (var i = 0; i <= x; i += 30) {
