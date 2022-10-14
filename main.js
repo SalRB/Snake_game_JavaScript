@@ -36,11 +36,10 @@ function startGame() {
     pHighScore.textContent = "High score: " + highScore;
 
     function setDifficulty() {
-
         switch (difficulty.value) {
             case "easy":
                 speed = 1.6;
-                growthRate = 20;
+                growthRate = 1;
                 x = 960;
                 y = 540;
                 break;
@@ -140,7 +139,6 @@ function startGame() {
 
     // Generetes the food
     function drawFood() {
-
         ctx.beginPath();
         ctx.arc(foodPosition[0], foodPosition[1], 15, 0, Math.PI * 2, false);
         ctx.fillStyle = "#B91D1D";
@@ -154,7 +152,6 @@ function startGame() {
             ctx.moveTo(0.5 + i + p, p);
             ctx.lineTo(0.5 + i + p, y + p);
         }
-
         for (var i = 0; i <= y; i += 30) {
             ctx.moveTo(p, 0.5 + i + p);
             ctx.lineTo(x + p, 0.5 + i + p);
