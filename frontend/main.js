@@ -1,6 +1,11 @@
 "use strict";
+// const packageName = require('./users.service');
 
 function startGame() {
+
+
+    console.log(paco());
+
 
     let startButton = document.getElementById("startButton");
     startButton.remove();
