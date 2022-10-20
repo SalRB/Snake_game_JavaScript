@@ -1,0 +1,35 @@
+[
+    {
+        "id": "12932130",
+        "username": "Paco",
+        "password": "paco",
+        "email": "paco@paco.paco",
+        "score": {
+            "easy": 12,
+            "medium": 16,
+            "hard": 21
+        }
+    },
+    {
+        "id": "12932130",
+        "username": "Andrea",
+        "password": "andrea",
+        "email": "andrea@andrea.andrea",
+        "score": {
+            "easy": 42,
+            "medium": 53,
+            "hard": 11
+        }
+    },
+    {
+        "id": "12932130",
+        "username": "Roberto",
+        "password": "roberto",
+        "email": "roberto@roberto.roberto",
+        "score": {
+            "easy": 3,
+            "medium": 23,
+            "hard": 19
+        }
+    }
+]

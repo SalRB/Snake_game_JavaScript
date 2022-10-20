@@ -18,10 +18,29 @@ function formRegister() {
 
 function startGame() {
 
+    let orderedScore;
+    let users;
+
     paco('http://localhost:3000/', { answer: 42 })
         .then((data) => {
-            console.log(data); // JSON data parsed by `data.json()` call
+            // console.log(data); // JSON data parsed by `data.json()` call
+            users = JSON.parse(data);
+
+            orderedScore = sort_by_key(users, 'hard');
+            console.log(orderedScore);
         });
+
+
+    function sort_by_key(array, key) {
+        return array.sort(function (a, b) {
+            var x = a['score'][key]; var y = b['score'][key];
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        });
+    }
+
+
+
+
 
 
 

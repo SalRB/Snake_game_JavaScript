@@ -16,7 +16,7 @@ canvas {
     margin-right: auto;
     display: block;
     max-width: 800px;
-    zoom: 150%;
+    zoom: 140%;
 }
 
 #reset {
@@ -40,4 +40,14 @@ button {
 
 form button {
     margin: 10px;
+}
+
+form {
+    margin: 20px;
+}
+
+input {
+    color: white;
+    background-color: black;
+    margin-bottom: 8px;
 }
