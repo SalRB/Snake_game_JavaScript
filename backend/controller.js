@@ -1,15 +1,12 @@
 const fs = require('fs');
 
 exports.getUsers = async (req, res) => {
-    
+
     fs.readFile("./json/users.json", "utf8", (err, jsonString) => {
         if (err) {
             console.log("File read failed:", err);
         }
-        // data = jsonString;
-        // console.log("File data:", jsonString);
         res.json(jsonString);
-
     });
 
     // try {

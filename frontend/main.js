@@ -1,10 +1,28 @@
 "use strict";
 // const packageName = require('./users.service');
 
+
+function formLogin() {
+    document.getElementById('button_login').classList.add('active');
+    document.getElementById('button_register').classList.remove('active');
+    document.getElementById('form_register').setAttribute('hidden', 'true');
+    document.getElementById('form_login').removeAttribute('hidden');
+}
+
+function formRegister() {
+    document.getElementById('button_login').classList.remove('active');
+    document.getElementById('button_register').classList.add('active');
+    document.getElementById('form_login').setAttribute('hidden', 'true');
+    document.getElementById('form_register').removeAttribute('hidden');
+}
+
 function startGame() {
 
+    paco('http://localhost:3000/', { answer: 42 })
+        .then((data) => {
+            console.log(data); // JSON data parsed by `data.json()` call
+        });
 
-    console.log(paco());
 
 
     let startButton = document.getElementById("startButton");

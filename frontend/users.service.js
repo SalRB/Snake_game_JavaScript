@@ -8,7 +8,6 @@
 // console.log(postData());
 
 async function paco(url = 'http://localhost:3000/', data = {}) {
-    // await fetch('http://localhost:3000/' + 'roberto');
 
     // Default options are marked with *
     const response = await fetch(url, {
@@ -17,11 +16,12 @@ async function paco(url = 'http://localhost:3000/', data = {}) {
         mode: 'cors' // no-cors, *cors, same-origin
     });
     let res = await response.json(); // parses JSON response into native JavaScript objects
+    // console.log(res);
     return res;
 
 }
 
-paco('http://localhost:3000/', { answer: 42 })
-    .then((data) => {
-        console.log(data); // JSON data parsed by `data.json()` call
-    });
+// paco('http://localhost:3000/', { answer: 42 })
+//     .then((data) => {
+//         // console.log(data); // JSON data parsed by `data.json()` call
+//     });

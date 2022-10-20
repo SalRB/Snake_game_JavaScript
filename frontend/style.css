@@ -32,3 +32,12 @@ button {
     color: white;
     margin-top: 20px;
 }
+
+.active {
+    background-color: white;
+    color: black;
+}
+
+form button {
+    margin: 10px;
+}
