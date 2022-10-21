@@ -7,7 +7,7 @@
 // }
 // console.log(postData());
 
-async function paco(url = 'http://localhost:3000/', data = {}) {
+async function getUsers(url = '', data = {}) {
 
     // Default options are marked with *
     const response = await fetch(url, {

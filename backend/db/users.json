@@ -11,25 +11,47 @@
         }
     },
     {
-        "id": "12932130",
+        "id": "123513121",
         "username": "Andrea",
         "password": "andrea",
         "email": "andrea@andrea.andrea",
         "score": {
             "easy": 42,
             "medium": 53,
-            "hard": 11
+            "hard": 19
         }
     },
     {
-        "id": "12932130",
+        "id": "42221123",
         "username": "Roberto",
         "password": "roberto",
         "email": "roberto@roberto.roberto",
         "score": {
             "easy": 3,
             "medium": 23,
-            "hard": 19
+            "hard": 11
+        }
+    },
+    {
+        "id": "44324121",
+        "username": "Julio",
+        "password": "julio",
+        "email": "julio@julio.julio",
+        "score": {
+            "easy": 1,
+            "medium": 1,
+            "hard": 1
+        }
+    },
+    {
+        "id": "918219",
+        "username": "Sergio",
+        "password": "sergio",
+        "email": "sergio@sergio.sergio",
+        "score": {
+            "easy": 66,
+            "medium": 66,
+            "hard": 66
         }
     }
 ]

@@ -1,6 +1,59 @@
 "use strict";
-// const packageName = require('./users.service');
 
+window.onload = load => {
+
+    document.getElementById('reset').setAttribute('hidden', 'true');
+
+    let easyRanking;
+    let mediumRanking;
+    let hardRanking;
+    let users;
+    const divRankingEasy = document.getElementById('rankingEasy');
+    const divRankingMedium = document.getElementById('rankingMedium');
+    const divRankingHard = document.getElementById('rankingHard');
+
+    getUsers('http://localhost:3000/', { answer: 42 })
+        .then((data) => {
+            users = JSON.parse(data);
+            loadRankings();
+        });
+
+    function loadRankings() {
+        easyRanking = sort_by_key(users, 'easy');
+        mediumRanking = sort_by_key(users, 'medium');
+        hardRanking = sort_by_key(users, 'hard');
+
+        printRankings();
+    }
+
+    function sort_by_key(array, key) {
+        return array.sort(function (a, b) {
+            let n = a['score'][key]; let m = b['score'][key];
+            return ((n > m) ? -1 : ((n < m) ? 1 : 0));
+        });
+    }
+
+    function printRankings() {
+        let myList = '<ol><h2>EASY</h2>';
+        for (var i = 0; i < 5; i++) {
+            myList += '<li>' + easyRanking[i]['score']['easy'] + ' ' + easyRanking[i]['username'] + '</li>';
+        }
+        myList += '</ol>';
+        divRankingEasy.innerHTML = myList;
+        myList = '<ol><h2>MEDIUM</h2>';
+        for (var i = 0; i < 5; i++) {
+            myList += '<li>' + mediumRanking[i]['score']['medium'] + ' ' + mediumRanking[i]['username'] + '</li>';
+        }
+        myList += '</ol>';
+        divRankingMedium.innerHTML = myList;
+        myList = '<ol><h2>HARD</h2>';
+        for (var i = 0; i < 5; i++) {
+            myList += '<li>' + hardRanking[i]['score']['hard'] + ' ' + hardRanking[i]['username'] + '</li>';
+        }
+        myList += '</ol>';
+        divRankingHard.innerHTML = myList;
+    }
+}
 
 function formLogin() {
     document.getElementById('button_login').classList.add('active');
@@ -18,32 +71,7 @@ function formRegister() {
 
 function startGame() {
 
-    let orderedScore;
-    let users;
-
-    paco('http://localhost:3000/', { answer: 42 })
-        .then((data) => {
-            // console.log(data); // JSON data parsed by `data.json()` call
-            users = JSON.parse(data);
-
-            orderedScore = sort_by_key(users, 'hard');
-            console.log(orderedScore);
-        });
-
-
-    function sort_by_key(array, key) {
-        return array.sort(function (a, b) {
-            var x = a['score'][key]; var y = b['score'][key];
-            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-        });
-    }
-
-
-
-
-
-
-
+    document.getElementById('reset').removeAttribute('hidden', 'true');
     let startButton = document.getElementById("startButton");
     startButton.remove();
 

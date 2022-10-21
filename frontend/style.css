@@ -51,3 +51,25 @@ input {
     background-color: black;
     margin-bottom: 8px;
 }
+
+.rankings {
+    width: 80%;
+    margin: auto;
+    margin-left: 15%;
+    display: grid;
+    grid-template-areas:
+        "diff1 diff2 diff3";
+
+}
+
+#rankingEasy {
+    grid-area: diff1;
+}
+
+#rankingMedium {
+    grid-area: diff2;
+}
+
+#rankingHard {
+    grid-area: diff3;
+}
