@@ -37,20 +37,6 @@ window.onload = async load => {
 
 }
 
-function formLogin() {
-    document.getElementById('button_login').classList.add('active');
-    document.getElementById('button_register').classList.remove('active');
-    document.getElementById('form_register').setAttribute('hidden', 'true');
-    document.getElementById('form_login').removeAttribute('hidden');
-}
-
-function formRegister() {
-    document.getElementById('button_login').classList.remove('active');
-    document.getElementById('button_register').classList.add('active');
-    document.getElementById('form_login').setAttribute('hidden', 'true');
-    document.getElementById('form_register').removeAttribute('hidden');
-}
-
 function startGame() {
 
     document.getElementById('reset').removeAttribute('hidden', 'true');

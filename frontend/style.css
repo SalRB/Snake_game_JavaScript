@@ -73,3 +73,14 @@ input {
 #rankingHard {
     grid-area: diff3;
 }
+
+.error {
+    color: red;
+    margin-bottom: -10px;
+}
+
+.error-active {
+    color: red;
+    margin-top: -3px;
+    margin-bottom: 7px;
+}
