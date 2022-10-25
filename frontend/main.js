@@ -1,58 +1,40 @@
 "use strict";
 
-window.onload = load => {
+window.onload = async load => {
 
     document.getElementById('reset').setAttribute('hidden', 'true');
 
-    let easyRanking;
-    let mediumRanking;
-    let hardRanking;
-    let users;
-    const divRankingEasy = document.getElementById('rankingEasy');
-    const divRankingMedium = document.getElementById('rankingMedium');
-    const divRankingHard = document.getElementById('rankingHard');
+    // getUsers('http://localhost:3000/', { answer: 42 })
+    //     .then((data) => {
+    //         users = JSON.parse(data);
+    //         loadRankings();
+    //     });
 
-    getUsers('http://localhost:3000/', { answer: 42 })
-        .then((data) => {
-            users = JSON.parse(data);
-            loadRankings();
+    const users = JSON.parse(await getUsers('http://localhost:3000/', { answer: 42 }))
+
+    const [easyRanking, mediumRanking, hardRanking] = sortRankings(users);
+
+    printRankings(easyRanking, mediumRanking, hardRanking);
+
+    function sortRankings(array) {
+        let easy = [];
+        let medium = [];
+        let hard = [];
+
+        array.forEach(element => {
+            const scores = element.score;
+            easy = [...easy, { username: element.username, score: element.score.easy }]
+            medium = [...medium, { username: element.username, score: element.score.medium }]
+            hard = [...hard, { username: element.username, score: element.score.hard }]
         });
 
-    function loadRankings() {
-        easyRanking = sort_by_key(users, 'easy');
-        mediumRanking = sort_by_key(users, 'medium');
-        hardRanking = sort_by_key(users, 'hard');
+        easy.sort((first, next) => (first.score > next.score) ? -1 : ((first.score < next.score) ? 1 : 0));
+        medium.sort((first, next) => (first.score > next.score) ? -1 : ((first.score < next.score) ? 1 : 0));
+        hard.sort((first, next) => (first.score > next.score) ? -1 : ((first.score < next.score) ? 1 : 0));
+        return [easy, medium, hard];
 
-        printRankings();
     }
 
-    function sort_by_key(array, key) {
-        return array.sort(function (a, b) {
-            let n = a['score'][key]; let m = b['score'][key];
-            return ((n > m) ? -1 : ((n < m) ? 1 : 0));
-        });
-    }
-
-    function printRankings() {
-        let myList = '<ol><h2>EASY</h2>';
-        for (var i = 0; i < 5; i++) {
-            myList += '<li>' + easyRanking[i]['score']['easy'] + ' ' + easyRanking[i]['username'] + '</li>';
-        }
-        myList += '</ol>';
-        divRankingEasy.innerHTML = myList;
-        myList = '<ol><h2>MEDIUM</h2>';
-        for (var i = 0; i < 5; i++) {
-            myList += '<li>' + mediumRanking[i]['score']['medium'] + ' ' + mediumRanking[i]['username'] + '</li>';
-        }
-        myList += '</ol>';
-        divRankingMedium.innerHTML = myList;
-        myList = '<ol><h2>HARD</h2>';
-        for (var i = 0; i < 5; i++) {
-            myList += '<li>' + hardRanking[i]['score']['hard'] + ' ' + hardRanking[i]['username'] + '</li>';
-        }
-        myList += '</ol>';
-        divRankingHard.innerHTML = myList;
-    }
 }
 
 function formLogin() {
