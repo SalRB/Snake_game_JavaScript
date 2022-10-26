@@ -18,6 +18,19 @@ exports.getUsers = async (req, res) => {
     // }
 }
 
+exports.getUser = async (req, res) => {
+    console.log(req);
+    console.log(req.body);
+    // console.log(req.query.email);
+    // fs.readFile("./db/users.json", "utf8", (err, jsonString) => {
+    //     if (err) {
+    //         console.log("File read failed:", err);
+    //     }
+    //     res.json(jsonString);
+    // });
+
+}
+
 // exports.getCategory = async (req, res) => {
 //     try {
 //         const category = await Category.findOne({ "slug": req.params.slug });

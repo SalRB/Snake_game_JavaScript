@@ -12,7 +12,7 @@ function formRegister() {
     document.getElementById('form_register').removeAttribute('hidden');
 }
 
-function onSubmit(type) {
+async function onSubmit(type) {
     const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
     const passwdRegex = /^[0-9a-zA-Z]{8,16}$/;
     const userRegex = /^[0-9a-zA-Z]{2,16}$/;
@@ -25,6 +25,8 @@ function onSubmit(type) {
             removeError('emailLogin');
             removeError('passwordLogin');
 
+            const users = JSON.parse(await getUser('http://localhost:3000/"paco"', { email: email, password: password }))
+            console.log(users);
         } else {
             if (!emailRegex.test(email)) {
                 addError('emailLogin', 'Email required');
