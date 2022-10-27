@@ -18,3 +18,9 @@ function printRankings(easyRanking, mediumRanking, hardRanking) {
     const hardList = '<ol><h2>HARD</h2>' + makelist(hardRanking) + '</ol>';
     divRankingHard.innerHTML = hardList;
 }
+
+function printPersonalBest(score) {
+    document.getElementById('personalScores').innerHTML = `<p><b>EASY:</p>` + score['easy'] + `</b>
+                                                            ` + `<p><b>MEDIUM:</p>` + score['medium'] + `</b>
+                                                            ` + `<p><b>HARD:</p>` + score['hard'] + `</b>`;
+}

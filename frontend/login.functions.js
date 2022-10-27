@@ -12,6 +12,10 @@ function formRegister() {
     document.getElementById('form_register').removeAttribute('hidden');
 }
 
+function removeForm() {
+    document.getElementById('form').innerHTML = '<button onclick="logout()">LOG OUT</button>';
+}
+
 async function onSubmit(type) {
     const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
     const passwdRegex = /^[0-9a-zA-Z]{8,16}$/;
@@ -25,8 +29,11 @@ async function onSubmit(type) {
             removeError('emailLogin');
             removeError('passwordLogin');
 
-            const users = JSON.parse(await getUser('http://localhost:3000/"paco"', { email: email, password: password }))
-            console.log(users);
+            const user = await getUser('http://localhost:3000/', { email: email, password: password });
+            printPersonalBest(user['score']);
+            saveLocalStorage(user['email'], user['password']);
+            removeForm();
+
         } else {
             if (!emailRegex.test(email)) {
                 addError('emailLogin', 'Email required');
@@ -85,4 +92,22 @@ function removeError(location) {
     location = location += 'Error';
     document.getElementById(location).classList.remove('error-active');
     document.getElementById(location).innerHTML = '';
+}
+
+function saveLocalStorage(user, password) {
+    localStorage.setItem('usr', window.btoa(user));
+    localStorage.setItem('pwd', window.btoa(password));
+}
+
+async function checkLocalStorage() {
+    if (localStorage.getItem('usr') && localStorage.getItem('pwd')) {
+        const user = await getUser('http://localhost:3000/', { email: window.atob(localStorage.getItem('usr')), password: window.atob(localStorage.getItem('pwd')) });
+        printPersonalBest(user['score']);
+        removeForm();
+    }
+}
+
+function logout() {
+    localStorage.removeItem('usr');
+    localStorage.removeItem('pwd');
 }

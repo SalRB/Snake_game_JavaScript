@@ -2,7 +2,7 @@
     {
         "id": "12932130",
         "username": "Paco",
-        "password": "paco",
+        "password": "pacopaco",
         "email": "paco@paco.paco",
         "score": {
             "easy": 12,
@@ -13,7 +13,7 @@
     {
         "id": "123513121",
         "username": "Andrea",
-        "password": "andrea",
+        "password": "pacopaco",
         "email": "andrea@andrea.andrea",
         "score": {
             "easy": 42,
@@ -24,7 +24,7 @@
     {
         "id": "42221123",
         "username": "Roberto",
-        "password": "roberto",
+        "password": "pacopaco",
         "email": "roberto@roberto.roberto",
         "score": {
             "easy": 3,
@@ -35,7 +35,7 @@
     {
         "id": "44324121",
         "username": "Julio",
-        "password": "julio",
+        "password": "pacopaco",
         "email": "julio@julio.julio",
         "score": {
             "easy": 1,
@@ -46,7 +46,7 @@
     {
         "id": "918219",
         "username": "Sergio",
-        "password": "sergio",
+        "password": "pacopaco",
         "email": "sergio@sergio.sergio",
         "score": {
             "easy": 66,

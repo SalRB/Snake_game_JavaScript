@@ -7,6 +7,8 @@
 // }
 // console.log(postData());
 
+// guardo base64 del correo y hash de la contraseña, al recargar pide a servidor la contraseña del mail en base 64, la convierte a hash y las compara
+
 async function getUser(url = '', data = {}) {
     const response = await fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -17,7 +19,6 @@ async function getUser(url = '', data = {}) {
         mode: 'cors' // no-cors, *cors, same-origin
     });
     let res = await response.json(); // parses JSON response into native JavaScript objects
-    // console.log(res);
     return res;
 }
 

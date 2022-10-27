@@ -2,6 +2,8 @@
 
 window.onload = async load => {
 
+    checkLocalStorage();
+
     document.getElementById('reset').setAttribute('hidden', 'true');
 
     // getUsers('http://localhost:3000/', { answer: 42 })
@@ -34,7 +36,6 @@ window.onload = async load => {
         return [easy, medium, hard];
 
     }
-
 }
 
 function startGame() {

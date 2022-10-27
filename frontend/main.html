@@ -17,24 +17,29 @@
         <button onclick="startGame()" id="startButton">Load</button>
     </div>
     <canvas id="leCanvas"></canvas>
-    <form>
+    <form id="form">
         <button type="button" id="button_login" class="active" onclick="formLogin()">Login</button>
         <button type="button" id="button_register" class="" onclick="formRegister()">Register</button>
         <div id="form_login">
             <label for="emailLogin">Email: </label><br><input type="email" name="emailLogin" id="emailLogin"><br>
             <p class="error" id="emailLoginError"></p>
-            <label for="passwordLogin">Password: </label><br><input type="password" name="passwordLogin" id="passwordLogin"><br>
+            <label for="passwordLogin">Password: </label><br><input type="password" name="passwordLogin"
+                id="passwordLogin"><br>
             <p class="error" id="passwordLoginError"></p>
             <button type="button" onclick="onSubmit('login')">Login</button>
         </div>
         <div id="form_register" hidden>
-            <label for="userRegister">Useranme: </label><br><input type="text" name="userRegister" id="userRegister"><br>
+            <label for="userRegister">Useranme: </label><br><input type="text" name="userRegister"
+                id="userRegister"><br>
             <p class="error" id="userRegisterError"></p>
-            <label for="emailRegister">Email: </label><br><input type="email" name="emailRegister" id="emailRegister"><br>
+            <label for="emailRegister">Email: </label><br><input type="email" name="emailRegister"
+                id="emailRegister"><br>
             <p class="error" id="emailRegisterError"></p>
-            <label for="passwordRegister">Password: </label><br><input type="password" name="passwordRegister" id="passwordRegister"><br>
+            <label for="passwordRegister">Password: </label><br><input type="password" name="passwordRegister"
+                id="passwordRegister"><br>
             <p class="error" id="passwordRegisterError"></p>
-            <label for="rpasswordRegister">Repeat password: </label><br><input type="password" name="rpasswordRegister" id="rpasswordRegister"><br>
+            <label for="rpasswordRegister">Repeat password: </label><br><input type="password" name="rpasswordRegister"
+                id="rpasswordRegister"><br>
             <p class="error" id="rpasswordRegisterError"></p>
             <button type="button" onclick="onSubmit('register')">Register</button>
         </div>
@@ -46,4 +51,8 @@
     <div id="rankingEasy"></div>
     <div id="rankingMedium"></div>
     <div id="rankingHard"></div>
+</div>
+
+<div id="personalScores">
+    <p>Login to have access to score tracking</p>
 </div>

@@ -19,15 +19,24 @@ exports.getUsers = async (req, res) => {
 }
 
 exports.getUser = async (req, res) => {
-    console.log(req);
-    console.log(req.body);
-    // console.log(req.query.email);
-    // fs.readFile("./db/users.json", "utf8", (err, jsonString) => {
-    //     if (err) {
-    //         console.log("File read failed:", err);
-    //     }
-    //     res.json(jsonString);
-    // });
+    // console.log(req.body);
+
+    fs.readFile("./db/users.json", "utf8", (err, jsonString) => {
+        if (err) {
+            console.log("File read failed:", err);
+        }
+        let result = JSON.parse(jsonString);
+        let results;
+
+        for (var i = 0; i < result.length; i++) {
+            if ((result[i]['email'].indexOf(req.body.email) != -1) && (result[i]['password'].indexOf(req.body.password) != -1)) {
+                results = result[i];
+                i = result.length;
+            }
+        }
+        res.json(results);
+    });
+
 
 }
 
@@ -41,3 +50,13 @@ exports.getUser = async (req, res) => {
 //     }
 // }
 
+// for (var i = 0; i < result.length; i++) {
+//     for (key in result[i]) {
+
+//         if (key !== "score") {
+//             if (result[i][key].indexOf(req.body.email) != -1) {
+//                 results.push(result[i]);
+//             }
+//         }
+//     }
+// }
