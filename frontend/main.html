@@ -17,7 +17,7 @@
         <button onclick="startGame()" id="startButton">Load</button>
     </div>
     <canvas id="leCanvas"></canvas>
-    <form id="form">
+    <form id="form" hidden>
         <button type="button" id="button_login" class="active" onclick="formLogin()">Login</button>
         <button type="button" id="button_register" class="" onclick="formRegister()">Register</button>
         <div id="form_login">
@@ -45,7 +45,7 @@
         </div>
     </form>
 </div>
-<button id="reset">Reset</button>
+<button id="reset" hidden>Reset</button>
 
 <div class="rankings">
     <div id="rankingEasy"></div>
@@ -53,6 +53,6 @@
     <div id="rankingHard"></div>
 </div>
 
-<div id="personalScores">
+<div id="personalScores" hidden>
     <p>Login to have access to score tracking</p>
 </div>

@@ -34,7 +34,12 @@ exports.getUser = async (req, res) => {
                 i = result.length;
             }
         }
-        res.json(results);
+        if (results) {
+            res.json(results);
+        } else {
+            res.json('Wrong password');
+        }
+
     });
 
 

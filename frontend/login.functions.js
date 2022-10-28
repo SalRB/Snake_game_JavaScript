@@ -30,11 +30,18 @@ async function onSubmit(type) {
             removeError('passwordLogin');
 
             const user = await getUser('http://localhost:3000/', { email: email, password: password });
-            printPersonalBest(user['score']);
-            saveLocalStorage(user['email'], user['password']);
-            removeForm();
+            if (typeof user == 'string') {
+                addError('passwordLogin', user);
+            } else {
+                printPersonalBest(user['score']);
+                saveLocalStorage(user['email'], user['password']);
+                removeForm();
+            }
 
         } else {
+            removeError('emailLogin');
+            removeError('passwordLogin');
+
             if (!emailRegex.test(email)) {
                 addError('emailLogin', 'Email required');
             } else {
@@ -104,7 +111,12 @@ async function checkLocalStorage() {
         const user = await getUser('http://localhost:3000/', { email: window.atob(localStorage.getItem('usr')), password: window.atob(localStorage.getItem('pwd')) });
         printPersonalBest(user['score']);
         removeForm();
+    } else {
+        localStorage.removeItem('usr');
+        localStorage.removeItem('pwd');
     }
+    document.getElementById('personalScores').removeAttribute('hidden');
+    document.getElementById('form').removeAttribute('hidden');
 }
 
 function logout() {
