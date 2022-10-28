@@ -39,9 +39,24 @@ exports.getUser = async (req, res) => {
         } else {
             res.json('Wrong password');
         }
+    });
+}
+
+exports.addUser = async (req, res) => {
+    fs.readFile("./db/users.json", "utf8", (err, jsonString) => {
+        if (err) {
+            console.log("File read failed:", err);
+        }
+        jsonString = JSON.parse(jsonString);
+        jsonString.push(req.body);
+        jsonString = JSON.stringify(jsonString);
+
+        fs.writeFile("./db/users.json", jsonString, "utf8", (err) => {
+            if (err) throw err;
+            res.json('User created successfully');
+        });
 
     });
-
 
 }
 

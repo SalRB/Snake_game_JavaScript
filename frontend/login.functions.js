@@ -57,13 +57,24 @@ async function onSubmit(type) {
         const email = document.getElementById('emailRegister').value;
         const password = document.getElementById('passwordRegister').value;
         const rpassword = document.getElementById('rpasswordRegister').value;
-        const user = document.getElementById('userRegister').value;
+        const username = document.getElementById('userRegister').value;
 
-        if (passwdRegex.test(password) && emailRegex.test(email) && passwdRegex.test(rpassword) && userRegex.test(user) && (password === rpassword)) {
+        if (passwdRegex.test(password) && emailRegex.test(email) && passwdRegex.test(rpassword) && userRegex.test(username) && (password === rpassword)) {
             removeError('userRegister');
             removeError('emailRegister');
             removeError('passwordRegister');
             removeError('rpasswordRegister');
+
+            await addUser('http://localhost:3000/register', { username: username, password: password, email: email, score: { easy: 0, medium: 0, hard: 0 } });
+            const user = await getUser('http://localhost:3000/', { email: email, password: password });
+            if (typeof user == 'string') {
+                addError('passwordLogin', user);
+            } else {
+                printPersonalBest(user['score']);
+                saveLocalStorage(user['email'], user['password']);
+                removeForm();
+            }
+
         } else {
             if (!userRegex.test(user)) {
                 addError('userRegister', 'Password required (8-16)');
