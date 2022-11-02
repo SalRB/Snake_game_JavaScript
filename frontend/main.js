@@ -74,6 +74,8 @@ function startGame() {
     let foodPosition = [numberProcessor(Math.floor(Math.random() * x - 15)) + 15, numberProcessor(Math.floor(Math.random() * y + 15)) - 15];
     let valid_position = [];
     let p = 0;
+    let walls = [];
+    let wallPosition;
 
     // pHighScore.textContent = "High score: " + highScore;
 
@@ -142,6 +144,10 @@ function startGame() {
         bodyCollision();
         borderCollision();
         drawBody();
+        if (selectedDifficulty == "medium" || selectedDifficulty == "hard") {
+            generateWall();
+            wallCollision();
+        }
         generateFood();
         drawGrid();
     }
@@ -202,6 +208,36 @@ function startGame() {
         ctx.stroke();
     }
 
+    function generateWall() {
+        if (foodEaten !== false) {
+            valid_position[0] = false;
+            while (valid_position[0] == false) {
+                wallPosition = [numberProcessor(Math.floor(Math.random() * x - 15)), numberProcessor(Math.floor(Math.random() * y + 15))];
+                valid_position[1] = snakeBody.length;
+                for (let i = 0; i < snakeBody.length; i++) {
+                    if (wallPosition[0] - 15 == snakeBody[i][0] && wallPosition[1] - 15 == snakeBody[i][1]) {
+                        valid_position[1]--;
+                    }
+                }
+                if (valid_position[1] == snakeBody.length) {
+                    valid_position[0] = true;
+                }
+            }
+            walls.push(wallPosition);
+        }
+        drawWall()
+    }
+
+    function drawWall() {
+        walls.forEach(coords => {
+            ctx.beginPath();
+            ctx.rect(coords[0], coords[1], 30, 30);
+            ctx.fillStyle = "#696969";
+            ctx.fill();
+            ctx.closePath();
+        });
+    }
+
     // Add event listener on keydown
     document.addEventListener('keydown', (event) => {
         control(event.code);
@@ -244,6 +280,14 @@ function startGame() {
     function borderCollision() {
         if (snakeBody[0][0] < -10 || snakeBody[0][0] > (x - 10) || snakeBody[0][1] < -10 || snakeBody[0][1] > (y - 10)) {
             gameOver("You died\nTry not to hug the walls");
+        }
+    }
+
+    function wallCollision() {
+        for (let i = 0; i < walls.length; i++) {
+            if (snakeBody[0][0] == walls[i][0] && snakeBody[0][1] == walls[i][1]) {
+                gameOver("You died\nOops, you died, git gud");
+            }
         }
     }
 
