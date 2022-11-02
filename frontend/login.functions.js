@@ -12,8 +12,10 @@ function formRegister() {
     document.getElementById('form_register').removeAttribute('hidden');
 }
 
-function removeForm() {
-    document.getElementById('form').innerHTML = '<button onclick="logout()">LOG OUT</button>';
+function removeForm(user) {
+    document.getElementById('form').innerHTML = `<h2 class="username">` + user['username'] + `</h2>
+    <img class="pfp" src="`+ user['pfp'] + `"><br>
+    <button class="logOutButton" onclick="logout()">LOG OUT</button>`;
 }
 
 async function onSubmit(type) {
@@ -35,7 +37,7 @@ async function onSubmit(type) {
             } else {
                 printPersonalBest(user['score']);
                 saveLocalStorage(user['email'], user['password']);
-                removeForm();
+                removeForm(user);
             }
 
         } else {
@@ -65,14 +67,18 @@ async function onSubmit(type) {
             removeError('passwordRegister');
             removeError('rpasswordRegister');
 
-            await addUser('http://localhost:3000/register', { username: username, password: password, email: email, score: { easy: 0, medium: 0, hard: 0 } });
+            const poke = await fetch("https://pokeapi.co/api/v2/pokemon/" + Math.floor(Math.random() * 905));
+            pfp = await poke.json(); // parses JSON response into native JavaScript objects
+            pfp = pfp['sprites']['other']['official-artwork']['front_default'];
+
+            await addUser('http://localhost:3000/register', { username: username, password: password, email: email, pfp: pfp, score: { easy: 0, medium: 0, hard: 0 } });
             const user = await getUser('http://localhost:3000/', { email: email, password: password });
             if (typeof user == 'string') {
                 addError('passwordLogin', user);
             } else {
                 printPersonalBest(user['score']);
                 saveLocalStorage(user['email'], user['password']);
-                removeForm();
+                removeForm(user);
             }
 
         } else {
@@ -121,7 +127,7 @@ async function checkLocalStorage() {
     if (localStorage.getItem('usr') && localStorage.getItem('pwd')) {
         const user = await getUser('http://localhost:3000/', { email: window.atob(localStorage.getItem('usr')), password: window.atob(localStorage.getItem('pwd')) });
         printPersonalBest(user['score']);
-        removeForm();
+        removeForm(user);
     } else {
         localStorage.removeItem('usr');
         localStorage.removeItem('pwd');

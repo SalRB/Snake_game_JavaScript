@@ -88,3 +88,11 @@ input {
     margin-top: -3px;
     margin-bottom: 7px;
 }
+
+.pfp {
+    width: 70px;
+}
+
+.logOutButton{
+    margin: 20px;
+}

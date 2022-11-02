@@ -1,1 +1,79 @@
-[{"username":"Paco","password":"pacopaco","email":"paco@paco.paco","score":{"easy":30,"medium":18,"hard":21}},{"username":"Andrea","password":"pacopaco","email":"andrea@andrea.andrea","score":{"easy":42,"medium":53,"hard":19}},{"username":"Roberto","password":"pacopaco","email":"roberto@roberto.roberto","score":{"easy":3,"medium":23,"hard":11}},{"username":"Julio","password":"pacopaco","email":"julio@julio.julio","score":{"easy":1,"medium":1,"hard":1}},{"username":"Sergio","password":"pacopaco","email":"sergio@sergio.sergio","score":{"easy":66,"medium":66,"hard":66}},{"username":"Roberto","password":"pacopaco","email":"rob@rob.rob","score":{"easy":0,"medium":0,"hard":0}}]
+[
+    {
+        "username": "Paco",
+        "password": "pacopaco",
+        "email": "paco@paco.paco",
+        "pfp": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+        "score": {
+            "easy": 30,
+            "medium": 18,
+            "hard": 21
+        }
+    },
+    {
+        "username": "Andrea",
+        "password": "pacopaco",
+        "email": "andrea@andrea.andrea",
+        "pfp": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+        "score": {
+            "easy": 42,
+            "medium": 53,
+            "hard": 19
+        }
+    },
+    {
+        "username": "Roberto",
+        "password": "pacopaco",
+        "email": "roberto@roberto.roberto",
+        "pfp": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/324.png",
+        "score": {
+            "easy": 3,
+            "medium": 23,
+            "hard": 11
+        }
+    },
+    {
+        "username": "Julio",
+        "password": "pacopaco",
+        "email": "julio@julio.julio",
+        "pfp": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/534.png",
+        "score": {
+            "easy": 1,
+            "medium": 1,
+            "hard": 1
+        }
+    },
+    {
+        "username": "Sergio",
+        "password": "pacopaco",
+        "email": "sergio@sergio.sergio",
+        "pfp": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/654.png",
+        "score": {
+            "easy": 66,
+            "medium": 66,
+            "hard": 66
+        }
+    },
+    {
+        "username": "Roberto",
+        "password": "pacopaco",
+        "email": "rob@rob.rob",
+        "pfp": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/213.png",
+        "score": {
+            "easy": 0,
+            "medium": 0,
+            "hard": 0
+        }
+    },
+    {
+        "username": "poke",
+        "password": "pacopaco",
+        "email": "poke@poke.poke",
+        "pfp": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/858.png",
+        "score": {
+            "easy": 0,
+            "medium": 0,
+            "hard": 0
+        }
+    }
+]
