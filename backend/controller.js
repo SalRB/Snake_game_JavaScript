@@ -8,19 +8,9 @@ exports.getUsers = async (req, res) => {
         }
         res.json(jsonString);
     });
-
-    // try {
-    //     const categories = await Category.find();
-    //     res.json(FormatObject(categories));
-    // } catch (error) {
-    //     console.log(error);
-    //     res.status(500).send(FormatError("Error occurred", res.statusCode));
-    // }
 }
 
 exports.getUser = async (req, res) => {
-    // console.log(req.body);
-
     fs.readFile("./db/users.json", "utf8", (err, jsonString) => {
         if (err) {
             console.log("File read failed:", err);
@@ -57,26 +47,28 @@ exports.addUser = async (req, res) => {
         });
 
     });
-
 }
 
-// exports.getCategory = async (req, res) => {
-//     try {
-//         const category = await Category.findOne({ "slug": req.params.slug });
-//         res.json(FormatObject(category));
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send(FormatError("Error occurred", res.statusCode));
-//     }
-// }
+exports.updateScore = async (req, res) => {
 
-// for (var i = 0; i < result.length; i++) {
-//     for (key in result[i]) {
+    fs.readFile("./db/users.json", "utf8", (err, jsonString) => {
+        if (err) {
+            console.log("File read failed:", err);
+        }
+        jsonString = JSON.parse(jsonString);
 
-//         if (key !== "score") {
-//             if (result[i][key].indexOf(req.body.email) != -1) {
-//                 results.push(result[i]);
-//             }
-//         }
-//     }
-// }
+        for (var i = 0; i < jsonString.length; i++) {
+            if ((jsonString[i]['email'].indexOf(req.body.email) != -1) && (jsonString[i]['score'][req.body.difficulty] < req.body.score)) {
+                jsonString[i]['score'][req.body.difficulty] = req.body.score;
+
+                jsonString = JSON.stringify(jsonString);
+                fs.writeFile("./db/users.json", jsonString, "utf8", (err) => {
+                    if (err) throw err;
+                    res.json('Score updated');
+                });
+                i = jsonString.length;
+
+            }
+        }
+    });
+}

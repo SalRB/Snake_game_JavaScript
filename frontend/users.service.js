@@ -46,6 +46,20 @@ async function addUser(url = '', data = {}) {
     return res;
 }
 
+async function updateScore(url = '', data = {}) {
+    const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data), // body data type must match "Content-Type" header,
+        mode: 'cors' // no-cors, *cors, same-origin
+    });
+    let res = await response.json(); // parses JSON response into native JavaScript objects
+    return res;
+}
+
+
 // headers: {
 //     'Content-Type': 'text/plain',
 // },

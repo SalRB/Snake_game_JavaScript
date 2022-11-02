@@ -52,19 +52,20 @@ function startGame() {
     let growthRate;
     let speed = 1;
     const difficulty = document.getElementById("difficulty");
+    const selectedDifficulty = difficulty.value;
     setDifficulty();
 
     canvas.setAttribute("width", x);
     canvas.setAttribute("height", y);
     const ctx = canvas.getContext("2d");
     const pScore = document.getElementById("score");
-    const pHighScore = document.getElementById("highScore");
+    // const pHighScore = document.getElementById("highScore");
 
     let direction;
     let snakeBody = [[150, 150]]
 
     let score = 0;
-    let highScore = localStorage.getItem("hScore");
+    // let highScore = localStorage.getItem("hScore");
     let alive;
     let foodEaten = false;
     let grow = 0;
@@ -72,10 +73,10 @@ function startGame() {
     let valid_position = [];
     let p = 0;
 
-    pHighScore.textContent = "High score: " + highScore;
+    // pHighScore.textContent = "High score: " + highScore;
 
     function setDifficulty() {
-        switch (difficulty.value) {
+        switch (selectedDifficulty) {
             case "easy":
                 speed = 1.6;
                 growthRate = 1;
@@ -232,8 +233,7 @@ function startGame() {
     function bodyCollision() {
         for (let i = 1; i < snakeBody.length; i++) {
             if (snakeBody[0][0] == snakeBody[i][0] && snakeBody[0][1] == snakeBody[i][1]) {
-                alive = false;
-                alert("You died\nYou can't eat yourself to get bigger");
+                gameOver("You died\nYou can't eat yourself to get bigger");
             }
         }
     }
@@ -241,27 +241,35 @@ function startGame() {
     // If the head collides with a wall, the game ends and an alerts pops up
     function borderCollision() {
         if (snakeBody[0][0] < -10 || snakeBody[0][0] > (x - 10) || snakeBody[0][1] < -10 || snakeBody[0][1] > (y - 10)) {
-            alive = false;
-            alert("You died\nTry not to hug the walls");
+            gameOver("You died\nTry not to hug the walls");
         }
     }
 
     // Detects if the actual score is the highest recorded score, if it is, overrides the previous one
     function highScoreFunction() {
-        if (localStorage.getItem("hScore")) {
-            if (localStorage.getItem("hScore") < score) {
-                localStorage.setItem('hScore', score);
-                pHighScore.textContent = "High score: " + score;
-            }
-        } else {
-            localStorage.setItem('hScore', score);
-        }
+        // if (localStorage.getItem("hScore")) {
+        //     if (localStorage.getItem("hScore") < score) {
+        //         localStorage.setItem('hScore', score);
+        //         pHighScore.textContent = "High score: " + score;
+        //     }
+        // } else {
+        //     localStorage.setItem('hScore', score);
+        // }
     }
 
     // The button to reset the game
     document.getElementById("reset").addEventListener("click", function () {
         location.reload();
     });
+
+    async function gameOver(message) {
+        alive = false;
+        alert(message);
+        if (localStorage.getItem('usr')) {
+            console.log(await updateScore('http://localhost:3000/score', { email: window.atob(localStorage.getItem('usr')), difficulty: selectedDifficulty, score: score }));
+        }
+    }
+
 
     const interval = setInterval(function () {
         if (alive !== false) {

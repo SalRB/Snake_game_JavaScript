@@ -8,6 +8,10 @@ body {
     display: flex;
 }
 
+.menu {
+    margin-left: 10px;
+}
+
 canvas {
     background-color: greenyellow;
     padding-left: 0;
