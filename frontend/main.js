@@ -60,6 +60,8 @@ function startGame() {
     const ctx = canvas.getContext("2d");
     const pScore = document.getElementById("score");
     // const pHighScore = document.getElementById("highScore");
+    const snakeColor = document.getElementById("snakeColor").value;
+    document.getElementById("snakeColorDiv").setAttribute("hidden", "true");
 
     let direction;
     let snakeBody = [[150, 150]]
@@ -149,7 +151,7 @@ function startGame() {
         snakeBody.forEach(coords => {
             ctx.beginPath();
             ctx.rect(coords[0], coords[1], 30, 30);
-            ctx.fillStyle = "#33730C";
+            ctx.fillStyle = snakeColor;
             ctx.fill();
             ctx.closePath();
         });
