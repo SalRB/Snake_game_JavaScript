@@ -12,6 +12,31 @@ body {
     margin-left: 10px;
 }
 
+.helpDiv .snake {
+    height: 20px;
+    width: 20px;
+    background-color: #33730C;
+}
+
+.helpDiv .food {
+    height: 20px;
+    width: 20px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.helpDiv .wall {
+    height: 20px;
+    width: 20px;
+    background-color: #696969;
+}
+
+.helpDiv .star {
+    font-size: 330%;
+    color: #00ced1;
+    margin: 0px;
+}
+
 canvas {
     background-color: greenyellow;
     padding-left: 0;
@@ -93,6 +118,6 @@ input {
     width: 70px;
 }
 
-.logOutButton{
+.logOutButton {
     margin: 20px;
 }

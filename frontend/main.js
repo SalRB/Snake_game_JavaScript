@@ -53,6 +53,8 @@ function startGame() {
     let speed = 1;
     const difficulty = document.getElementById("difficulty");
     const selectedDifficulty = difficulty.value;
+
+    let scoregrowthRate;
     setDifficulty();
 
     canvas.setAttribute("width", x);
@@ -84,18 +86,21 @@ function startGame() {
             case "easy":
                 speed = 1.6;
                 growthRate = 1;
+                scoregrowthRate = 1;
                 x = 960;
                 y = 540;
                 break;
             case "medium":
                 speed = 1;
                 growthRate = 3;
+                scoregrowthRate = 2;
                 x = 1440;
                 y = 810;
                 break;
             case "hard":
                 speed = 0.9;
                 growthRate = 5;
+                scoregrowthRate = 3;
                 x = 1920;
                 y = 1080;
                 break;
@@ -147,6 +152,10 @@ function startGame() {
         if (selectedDifficulty == "medium" || selectedDifficulty == "hard") {
             generateWall();
             wallCollision();
+        }
+        if (selectedDifficulty == "hard") {
+            drawStar(285, 285, 5, 17, 8);
+            // drawStar(285, 285, 5, 30, 15);
         }
         generateFood();
         drawGrid();
@@ -238,6 +247,35 @@ function startGame() {
         });
     }
 
+    function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+        var rot = Math.PI / 2 * 3;
+        var x = cx;
+        var y = cy;
+        var step = Math.PI / spikes;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - outerRadius)
+        for (let i = 0; i < spikes; i++) {
+            x = cx + Math.cos(rot) * outerRadius;
+            y = cy + Math.sin(rot) * outerRadius;
+            ctx.lineTo(x, y)
+            rot += step
+
+            x = cx + Math.cos(rot) * innerRadius;
+            y = cy + Math.sin(rot) * innerRadius;
+            ctx.lineTo(x, y)
+            rot += step
+        }
+        ctx.lineTo(cx, cy - outerRadius);
+        ctx.closePath();
+        // ctx.lineWidth = 5;
+        // ctx.strokeStyle = 'blue';
+        ctx.stroke();
+        ctx.fillStyle = "#00ced1";
+        ctx.fill();
+    }
+
+
     // Add event listener on keydown
     document.addEventListener('keydown', (event) => {
         control(event.code);
@@ -260,7 +298,7 @@ function startGame() {
     function foodCollision() {
         if ((snakeBody[0][0] + 40 > foodPosition[0] && snakeBody[0][0] - 10 < foodPosition[0]) && (snakeBody[0][1] - 0 < foodPosition[1] && snakeBody[0][1] + 30 > foodPosition[1])) {
             foodEaten = true;
-            score++;
+            score = score + scoregrowthRate;
 
             pScore.textContent = "Score: " + score;
             highScoreFunction();
