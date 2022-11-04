@@ -73,14 +73,15 @@ function startGame() {
     let alive;
     let foodEaten = false;
     let grow = 0;
-    let foodPosition = [numberProcessor(Math.floor(Math.random() * x - 15)) + 15, numberProcessor(Math.floor(Math.random() * y + 15)) - 15];
     let valid_position = [];
+    let foodPosition = generateValidCoords(false);
     let p = 0;
     let walls = [];
     let wallPosition;
+    let starCoords;
 
     // pHighScore.textContent = "High score: " + highScore;
-
+    // 64 36
     function setDifficulty() {
         switch (selectedDifficulty) {
             case "easy":
@@ -107,10 +108,6 @@ function startGame() {
             default:
                 break;
         }
-    }
-
-    function numberProcessor(num) {
-        return Math.round(num / 30) * 30;
     }
 
     // Depending on the direction variable, moves the snake accordingly
@@ -149,15 +146,31 @@ function startGame() {
         bodyCollision();
         borderCollision();
         drawBody();
+
+        if (foodEaten !== false) {
+            if (selectedDifficulty == "medium" || selectedDifficulty == "hard") {
+                walls.push(generateValidCoords(true));
+            }
+            foodPosition = generateValidCoords(false);
+
+            if (Math.floor(Math.random() * 5) == 3 && selectedDifficulty == "hard") {
+                starCoords = generateValidCoords(false);
+            }
+
+            foodEaten = false;
+            grow = growthRate + grow;
+        }
         if (selectedDifficulty == "medium" || selectedDifficulty == "hard") {
-            generateWall();
+            drawWall();
             wallCollision();
         }
-        if (selectedDifficulty == "hard") {
-            drawStar(285, 285, 5, 17, 8);
-            // drawStar(285, 285, 5, 30, 15);
+        if (selectedDifficulty == "hard" && starCoords) {
+            starCollision();
+            drawStar(5, 17, 8);
         }
-        generateFood();
+
+        drawFood();
+
         drawGrid();
     }
 
@@ -170,28 +183,6 @@ function startGame() {
             ctx.fill();
             ctx.closePath();
         });
-    }
-
-    // Generetes the food coords at an empty spot
-    function generateFood() {
-        if (foodEaten !== false) {
-            valid_position[0] = false;
-            while (valid_position[0] == false) {
-                foodPosition = [numberProcessor(Math.floor(Math.random() * x - 15)) + 15, numberProcessor(Math.floor(Math.random() * y + 15)) - 15];
-                valid_position[1] = snakeBody.length;
-                for (let i = 0; i < snakeBody.length; i++) {
-                    if (foodPosition[0] - 15 == snakeBody[i][0] && foodPosition[1] - 15 == snakeBody[i][1]) {
-                        valid_position[1]--;
-                    }
-                }
-                if (valid_position[1] == snakeBody.length) {
-                    valid_position[0] = true;
-                }
-            }
-            foodEaten = false;
-            grow = growthRate + grow;
-        }
-        drawFood()
     }
 
     // Generetes the food
@@ -217,24 +208,30 @@ function startGame() {
         ctx.stroke();
     }
 
-    function generateWall() {
-        if (foodEaten !== false) {
-            valid_position[0] = false;
-            while (valid_position[0] == false) {
-                wallPosition = [numberProcessor(Math.floor(Math.random() * x - 15)), numberProcessor(Math.floor(Math.random() * y + 15))];
-                valid_position[1] = snakeBody.length;
-                for (let i = 0; i < snakeBody.length; i++) {
-                    if (wallPosition[0] - 15 == snakeBody[i][0] && wallPosition[1] - 15 == snakeBody[i][1]) {
-                        valid_position[1]--;
-                    }
-                }
-                if (valid_position[1] == snakeBody.length) {
-                    valid_position[0] = true;
+    function generateValidCoords(isSquare) {
+        let coords;
+        valid_position[0] = false;
+        while (valid_position[0] == false) {
+            coords = [Math.round(Math.floor(Math.random() * x - 15) / 30) * 30, Math.round(Math.floor(Math.random() * y + 15) / 30) * 30];
+            valid_position[1] = snakeBody.length;
+            for (let i = 0; i < snakeBody.length; i++) {
+                console.log(coords[0], coords[1], snakeBody[i][0], snakeBody[i][1]);
+                if ((coords[0] == snakeBody[i][0] && coords[1] - 30 == snakeBody[i][1]) || (coords[0] == snakeBody[i][0] && coords[1] == snakeBody[i][1])) {
+                    console.log('as');
+                    valid_position[1]--;
                 }
             }
-            walls.push(wallPosition);
+            if (valid_position[1] == snakeBody.length) {
+                console.log('AAAAAA');
+                valid_position[0] = true;
+            }
         }
-        drawWall()
+        if (isSquare == false) {
+            coords[0] = coords[0] + 15;
+            coords[1] = coords[1] - 15;
+        }
+        console.log(coords);
+        return coords;
     }
 
     function drawWall() {
@@ -247,29 +244,27 @@ function startGame() {
         });
     }
 
-    function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
-        var rot = Math.PI / 2 * 3;
-        var x = cx;
-        var y = cy;
-        var step = Math.PI / spikes;
+    function drawStar(spikes, outerRadius, innerRadius) {
+        let rot = Math.PI / 2 * 3;
+        let x = starCoords[0];
+        let y = starCoords[1];
+        let step = Math.PI / spikes;
 
         ctx.beginPath();
-        ctx.moveTo(cx, cy - outerRadius)
+        ctx.moveTo(starCoords[0], starCoords[1] - outerRadius)
         for (let i = 0; i < spikes; i++) {
-            x = cx + Math.cos(rot) * outerRadius;
-            y = cy + Math.sin(rot) * outerRadius;
+            x = starCoords[0] + Math.cos(rot) * outerRadius;
+            y = starCoords[1] + Math.sin(rot) * outerRadius;
             ctx.lineTo(x, y)
             rot += step
 
-            x = cx + Math.cos(rot) * innerRadius;
-            y = cy + Math.sin(rot) * innerRadius;
+            x = starCoords[0] + Math.cos(rot) * innerRadius;
+            y = starCoords[1] + Math.sin(rot) * innerRadius;
             ctx.lineTo(x, y)
             rot += step
         }
-        ctx.lineTo(cx, cy - outerRadius);
+        ctx.lineTo(starCoords[0], starCoords[1] - outerRadius);
         ctx.closePath();
-        // ctx.lineWidth = 5;
-        // ctx.strokeStyle = 'blue';
         ctx.stroke();
         ctx.fillStyle = "#00ced1";
         ctx.fill();
@@ -328,6 +323,13 @@ function startGame() {
             }
         }
     }
+
+    function starCollision() {
+        if (snakeBody[0][0] == starCoords[0] - 15 && snakeBody[0][1] == starCoords[1] - 15) {
+            starCoords = [];
+        }
+    }
+
 
     // Detects if the actual score is the highest recorded score, if it is, overrides the previous one
     function highScoreFunction() {
