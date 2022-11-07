@@ -1,3 +1,4 @@
+// Replaces the form with the login one 
 function formLogin() {
     document.getElementById('button_login').classList.add('active');
     document.getElementById('button_register').classList.remove('active');
@@ -5,6 +6,7 @@ function formLogin() {
     document.getElementById('form_login').removeAttribute('hidden');
 }
 
+// Replaces the form with the register one
 function formRegister() {
     document.getElementById('button_login').classList.remove('active');
     document.getElementById('button_register').classList.add('active');
@@ -12,12 +14,14 @@ function formRegister() {
     document.getElementById('form_register').removeAttribute('hidden');
 }
 
+// Removes the form when a users logs in and prints their name and image
 function removeForm(user) {
     document.getElementById('form').innerHTML = `<h2 class="username">` + user['username'] + `</h2>
     <img class="pfp" src="`+ user['pfp'] + `"><br>
     <button class="logOutButton" onclick="logout()">LOG OUT</button>`;
 }
 
+// Checks if the data introduced on the form is valid and logs in or registers the user, if the information is invalid, prints errors
 async function onSubmit(type) {
     const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
     const passwdRegex = /^[0-9a-zA-Z]{8,16}$/;
@@ -67,6 +71,7 @@ async function onSubmit(type) {
             removeError('passwordRegister');
             removeError('rpasswordRegister');
 
+            // Uses a pokémon api to use a random pokémon sprite as pfp for the user
             const poke = await fetch("https://pokeapi.co/api/v2/pokemon/" + Math.floor(Math.random() * 905));
             pfp = await poke.json(); // parses JSON response into native JavaScript objects
             pfp = pfp['sprites']['other']['official-artwork']['front_default'];
@@ -82,8 +87,8 @@ async function onSubmit(type) {
             }
 
         } else {
-            if (!userRegex.test(user)) {
-                addError('userRegister', 'Password required (8-16)');
+            if (!userRegex.test(username)) {
+                addError('userRegister', 'Username required (4-16)');
             } else {
                 removeError('userRegister');
             }
@@ -106,23 +111,27 @@ async function onSubmit(type) {
     }
 }
 
+// Prints an error under the form inputs
 function addError(location, message) {
     location = location += 'Error';
     document.getElementById(location).classList.add('error-active');
     document.getElementById(location).innerHTML = message;
 }
 
+// Removes the error messages
 function removeError(location) {
     location = location += 'Error';
     document.getElementById(location).classList.remove('error-active');
     document.getElementById(location).innerHTML = '';
 }
 
+// Saves the user data on localstorage 
 function saveLocalStorage(user, password) {
     localStorage.setItem('usr', window.btoa(user));
     localStorage.setItem('pwd', window.btoa(password));
 }
 
+// Check if there is a logged user
 async function checkLocalStorage() {
     if (localStorage.getItem('usr') && localStorage.getItem('pwd')) {
         const user = await getUser('http://localhost:3000/', { email: window.atob(localStorage.getItem('usr')), password: window.atob(localStorage.getItem('pwd')) });
@@ -136,6 +145,7 @@ async function checkLocalStorage() {
     document.getElementById('form').removeAttribute('hidden');
 }
 
+// Removes the data from localstorage
 function logout() {
     localStorage.removeItem('usr');
     localStorage.removeItem('pwd');

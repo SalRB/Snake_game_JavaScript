@@ -12,6 +12,10 @@ body {
     margin-left: 10px;
 }
 
+.helpDiv {
+margin-left: 20px;
+}
+
 .helpDiv .snake {
     height: 20px;
     width: 20px;
@@ -120,4 +124,9 @@ input {
 
 .logOutButton {
     margin: 20px;
+}
+
+.gameTitle {
+    text-align: center;
+    font-size: 136%;
 }

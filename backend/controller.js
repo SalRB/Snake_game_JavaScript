@@ -1,5 +1,7 @@
+// Uses node fs to read and write a json file
 const fs = require('fs');
 
+// Reads all the users
 exports.getUsers = async (req, res) => {
 
     fs.readFile("./db/users.json", "utf8", (err, jsonString) => {
@@ -10,6 +12,7 @@ exports.getUsers = async (req, res) => {
     });
 }
 
+// Returns a user data if the login data is correct
 exports.getUser = async (req, res) => {
     fs.readFile("./db/users.json", "utf8", (err, jsonString) => {
         if (err) {
@@ -32,6 +35,7 @@ exports.getUser = async (req, res) => {
     });
 }
 
+// Adds a user 
 exports.addUser = async (req, res) => {
     fs.readFile("./db/users.json", "utf8", (err, jsonString) => {
         if (err) {
@@ -49,6 +53,7 @@ exports.addUser = async (req, res) => {
     });
 }
 
+// Updates a user's score if is higher than the previous one
 exports.updateScore = async (req, res) => {
 
     fs.readFile("./db/users.json", "utf8", (err, jsonString) => {

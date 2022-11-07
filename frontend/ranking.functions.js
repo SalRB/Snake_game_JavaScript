@@ -1,3 +1,4 @@
+// Builds the numbered list to print the scores 
 function makelist(array) {
     let myList = "";
     for (var i = 0; i < 5; i++) {
@@ -6,6 +7,7 @@ function makelist(array) {
     return myList
 }
 
+// Print the best scores for each mode
 function printRankings(easyRanking, mediumRanking, hardRanking) {
     const divRankingEasy = document.getElementById('rankingEasy');
     const divRankingMedium = document.getElementById('rankingMedium');
@@ -19,6 +21,7 @@ function printRankings(easyRanking, mediumRanking, hardRanking) {
     divRankingHard.innerHTML = hardList;
 }
 
+// Prints the best scores of a logged user
 function printPersonalBest(score) {
     document.getElementById('personalScores').innerHTML = `<p><b>EASY:</p>` + score['easy'] + `</b>
                                                             ` + `<p><b>MEDIUM:</p>` + score['medium'] + `</b>

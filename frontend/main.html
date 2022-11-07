@@ -4,7 +4,11 @@
     <script src="login.functions.js"></script>
     <script src="main.js"></script>
     <script src="users.service.js"></script>
+    <title>Snake</title>
 </head>
+<div class="gameTitle">
+    <h1>Snake game</h1>
+</div>
 <div class="container">
     <div class="menu">
         <select name="difficulty" id="difficulty">
@@ -34,7 +38,7 @@
         <div class="wall"></div>
         <h4>A wall, don't bite it</h4>
         <h1 class="star">★</h1>
-        <h4>Gives a lot of points, but increases the <br>speed for a short amount of time</h4>
+        <h4>Gives a lot of points, but increases the <br>speed permanently</h4>
     </div>
     <form id="form" hidden>
         <button type="button" id="button_login" class="active" onclick="formLogin()">Login</button>
